@@ -7,7 +7,6 @@
     <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
     <style>
         body {
-            color: #ffffff;
             margin: 0;
             padding: 0;
             display: flex;
@@ -28,14 +27,15 @@
             overflow: hidden;
         }
 
+        /* Ruffle player will fill the available space while keeping aspect ratio */
         #ruffle-player {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ensures the SWF keeps its aspect ratio */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;  /* Maintains aspect ratio */
         }
 
-        /* Optional: Center the title */
+        /* Optional: Center the title at the top */
         h1 {
             position: absolute;
             top: 20px;
@@ -51,7 +51,7 @@
     <h1>Plants VS. Zombies Cool UBG</h1>
 
     <div id="flash-container">
-        <!-- SWF Embed using Ruffle -->
+        <!-- Ruffle SWF Embed -->
         <div id="ruffle-player"></div>
     </div>
 
@@ -59,27 +59,27 @@
         // Initialize Ruffle and load the SWF content
         var ruffle = window.RufflePlayer.newest();
         var player = ruffle.createPlayer();
-
-        // Append the Ruffle player to the container
+        
+        // Append the Ruffle player to the container div
         var playerContainer = document.getElementById("ruffle-player");
         playerContainer.appendChild(player);
 
         // Load the SWF file
         player.load("plants-vs-zombies.swf");
 
-        // Resize the SWF content to fill the container while maintaining aspect ratio
+        // Function to resize the SWF content to fit the container while maintaining aspect ratio
         function resizePlayer() {
             var width = window.innerWidth;
             var height = window.innerHeight;
 
             // The SWF file's original width and height (modify if different)
-            var swfWidth = 800;
-            var swfHeight = 600;
+            var swfWidth = 800;  // Change to the actual width of your SWF
+            var swfHeight = 600; // Change to the actual height of your SWF
 
             // Calculate the aspect ratio
             var aspectRatio = swfWidth / swfHeight;
 
-            // Determine the new width and height while keeping the aspect ratio
+            // Calculate new width and height to fit the window while preserving aspect ratio
             var newWidth = width;
             var newHeight = width / aspectRatio;
 
@@ -88,14 +88,14 @@
                 newWidth = height * aspectRatio;
             }
 
-            // Set the new size for the Ruffle player
-            player.style.width = newWidth + "px";
-            player.style.height = newHeight + "px";
+            // Apply the new size to the Ruffle player
+            player.style.width = newWidth + 'px';
+            player.style.height = newHeight + 'px';
         }
 
         // Call resize initially and on window resize
-        window.addEventListener("resize", resizePlayer);
-        window.dispatchEvent(new Event("resize")); // Trigger initial resize
+        window.addEventListener('resize', resizePlayer);
+        window.dispatchEvent(new Event('resize')); // Trigger initial resize
     </script>
 </body>
 </html>
